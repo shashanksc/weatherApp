@@ -32,7 +32,22 @@ body {
     background-color: #0056b3;
   }
   
-
+  .cityInfo{
+    width: calc(30% - 30px);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border: 1px solid #8c8c8c;
+    border-radius: 5px;
+  }
+  .displayName{
+    font-size: larger;
+    color: #0056b3;
+    font-weight: 700;
+    padding: 5px;
+    padding-left: 0px;
+  }
   .weather {
     display: flex;
     flex-wrap: wrap;

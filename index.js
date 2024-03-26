@@ -14,8 +14,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     if(data.length > 0) {
                         const latitude = data[0].lat; // Extract latitude
                         const longitude = data[0].lon; // Extract longitude
+                        const name = data[0].display_name;
                         console.log("Latitude:", latitude);
                         console.log("Longitude:", longitude);
+                        const cityInfo = document.querySelector('.cityInfo');
+                        const displayName = document.querySelector('.displayName');
+                        displayName.innerText=name;
+                        const lat = document.querySelector('.lat');
+                        const long = document.querySelector('.long');
+                        lat.innerText=`Latitude : ${latitude}`;
+                        long.innerText=`Longitude : ${longitude}`;
+                        cityInfo.appendChild(lat);
+                        cityInfo.appendChild(long);
                         getWeather(latitude,longitude);
                         //         if (latitude !== '' && longitude !== '') {
 
@@ -29,9 +39,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
 });
+function findRealtimeIndex() {
+    const now = new Date();
+    const currentTime = now.getTime();
+    const hourlyData = data.hourly;
 
+    for (let i = 0; i < hourlyData.time.length; i++) {
+        const timestamp = new Date(hourlyData.time[i]).getTime();
+        if (timestamp >= currentTime) {
+            return i;
+        }
+    }
+
+    return hourlyData.time.length - 1; // Default to the last index if current time is not found
+}
 
 function getWeather(latitude, longitude) {
+    //const realtimeIndex = findRealtimeIndex();
     const weatherDataContainer = document.querySelector(".weather"); // Define weatherDataContainer inside the function
 
     const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m`;
@@ -41,10 +65,10 @@ function getWeather(latitude, longitude) {
         .then(data => {
             // Clear previous data
             weatherDataContainer.innerHTML = '';
-
+           
             // Display weather data
             const hourlyData = data.hourly;
-
+            // i want 
             hourlyData.time.forEach((timestamp, index) => {
                 const temperature = hourlyData.temperature_2m[index];
                 const dateTime = new Date(timestamp);
