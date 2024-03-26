@@ -69,9 +69,16 @@ function getWeather(latitude, longitude) {
             // Display weather data
             const hourlyData = data.hourly;
             // i want 
+            const now = new Date(); // Get the current date and time in ms that have passed since 1 jan 1970
+            const currentTime = now.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }); // Convert to AM/PM format
+            const time = document.querySelector('.time');
+            time.textContent=currentTime;
+            console.log(currentTime);
+
             hourlyData.time.forEach((timestamp, index) => {
                 const temperature = hourlyData.temperature_2m[index];
                 const dateTime = new Date(timestamp);
+                
                 const formattedDate = dateTime.toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
                 const formattedTime = dateTime.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
